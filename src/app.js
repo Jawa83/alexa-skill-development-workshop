@@ -66,6 +66,6 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
         }
     },
     Unhandled() {
-        this.emitWithState('Start');
+        this.emit(':tell', 'Unhandled');
     }
 });
