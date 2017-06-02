@@ -47,7 +47,7 @@ module.exports.startHandlers = Alexa.CreateStateHandler(states.START, {
 module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
     'NumberGuessIntent': function() {
         var guessNum = parseInt(this.event.request.intent.slots.number.value);
-        var targetNum = this.attributes['guessNumber'];
+        var targetNum = this.attributes['result'];
 
         console.log('user guessed: ' + guessNum);
 
