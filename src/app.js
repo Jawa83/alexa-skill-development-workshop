@@ -52,9 +52,9 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
         console.log('user guessed: ' + guessNum);
 
         if (guessNum > targetNum) {
-            this.emit(':tell', 'The number is too high');
+            this.emit(':ask', 'The number is too high', 'The number is too high');
         } else if( guessNum < targetNum){
-            this.emit(':tell', 'The number is too low');
+            this.emit(':ask', 'The number is too low', 'The number is too low');
         } else if (guessNum === targetNum){
             // With a callback, use the arrow function to preserve the correct 'this' context
             this.emit('JustRight', () => {
