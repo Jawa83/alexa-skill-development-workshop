@@ -25,7 +25,7 @@ module.exports.startHandlers = Alexa.CreateStateHandler(states.START, {
         this.emit(':ask', WELCOME_MESSAGE, HELP_MESSAGE);
     },
     'AMAZON.YesIntent': function () {
-        this.emit(':ask, START_MESSAGE', START_MESSAGE);
+        this.emit(':tell, START_MESSAGE');
     },
     'AMAZON.StopIntent': function () {
         this.emit(':tell', EXIT_SKILL_MESSAGE);
