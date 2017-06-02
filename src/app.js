@@ -60,7 +60,7 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
             this.emit(':ask', guessNum.toString() + 'is correct! Would you like to play a new game?',
                 'Say yes to start a new game, or no to end the game.');
         } else {
-            this.emit(':tell', 'That is not a number');
+            this.emit(':ask', 'That is not a number, try again');
         }
     },
     Unhandled() {
