@@ -30,6 +30,9 @@ module.exports.startHandlers = Alexa.CreateStateHandler(states.START, {
         this.handler.state = states.GUESS;
         this.emit(':ask', START_MESSAGE, START_MESSAGE);
     },
+    'AMAZON.NoIntent': function () {
+        this.emit(':tell', EXIT_SKILL_MESSAGE);
+    },
     'AMAZON.StopIntent': function () {
         this.emit(':tell', EXIT_SKILL_MESSAGE);
     },
@@ -48,8 +51,6 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
     'NumberGuessIntent': function() {
         var guessNum = parseInt(this.event.request.intent.slots.number.value);
         var targetNum = this.attributes['result'];
-
-        console.log('user guessed: ' + guessNum);
 
         if (guessNum > targetNum) {
             this.emit(':ask', 'The number is too high', 'The number is too high');
