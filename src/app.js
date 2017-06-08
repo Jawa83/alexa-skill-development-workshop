@@ -50,8 +50,8 @@ module.exports.startHandlers = Alexa.CreateStateHandler(states.START, {
 
 module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
     'httpIntent': function() {
-        let mydata = this.event.request.intent.slots.mydata.value;
-        console.log('mydata:', mydata);
+        // let mydata = this.event.request.intent.slots.mydata.value;
+        // console.log('mydata:', mydata);
         let responseString = '';
         const mythis = this;
         https.get('https://finance.google.com/finance/info?client=ig&q=NASDAQ:MSFT', (res) => {
