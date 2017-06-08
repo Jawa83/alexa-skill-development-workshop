@@ -53,12 +53,11 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
         // let mydata = this.event.request.intent.slots.mydata.value;
         // console.log('mydata:', mydata);
         let responseString = '';
-        const mythis = this;
 
         var resultCallback = function (res) {
-            const speechOutput = responseString;
-            console.log('==> Answering: ', speechOutput);
-            mythis.emit(':tell', 'The answer is'+speechOutput);
+            var response = JSON.parse(responseString);
+            console.log('==> Answering: ', response);
+            mythis.emit(':tell', 'The answer is' + response.l_cur);
         }
 
         https.get('https://finance.google.com/finance/info?client=ig&q=NASDAQ:MSFT', (res) => {
