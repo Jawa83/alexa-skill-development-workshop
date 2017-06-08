@@ -26,28 +26,6 @@ module.exports.startHandlers = Alexa.CreateStateHandler(states.START, {
     Start() {
         this.emit(':ask', WELCOME_MESSAGE, HELP_MESSAGE);
     },
-    'httpIntent': function() {
-        let mydata = this.event.request.intent.slots.mydata.value;
-        console.log('mydata:', mydata);
-        let responseString = '';
-        const mythis = this;
-        https.get('https://finance.google.com/finance/info?client=ig&q=NASDAQ:MSFT', (res) => {
-            console.log('statusCode:', res.statusCode);
-            console.log('headers:', res.headers);
-
-            res.on('data', (d) => {
-                responseString += d;
-            });
-
-            res.on('end', function(res) {
-                const speechOutput = responseString;
-                console.log('==> Answering: ', speechOutput);
-                mythis.emit(':tell', 'The answer is'+speechOutput);
-            });
-        }).on('error', (e) => {
-            console.error(e);
-        });
-    },
     'AMAZON.YesIntent': function () {
         this.attributes['result'] = Math.floor(Math.random() * 100);
         this.handler.state = states.GUESS;
@@ -71,6 +49,28 @@ module.exports.startHandlers = Alexa.CreateStateHandler(states.START, {
 });
 
 module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
+    'httpIntent': function() {
+        let mydata = this.event.request.intent.slots.mydata.value;
+        console.log('mydata:', mydata);
+        let responseString = '';
+        const mythis = this;
+        https.get('https://finance.google.com/finance/info?client=ig&q=NASDAQ:MSFT', (res) => {
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+
+            res.on('data', (d) => {
+                responseString += d;
+            });
+
+            res.on('end', function(res) {
+                const speechOutput = responseString;
+                console.log('==> Answering: ', speechOutput);
+                mythis.emit(':tell', 'The answer is'+speechOutput);
+            });
+        }).on('error', (e) => {
+            console.error(e);
+        });
+    },
     'NumberGuessIntent': function() {
         var guessNum = parseInt(this.event.request.intent.slots.number.value);
         var targetNum = this.attributes['result'];
