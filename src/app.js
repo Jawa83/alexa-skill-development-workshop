@@ -55,10 +55,8 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
         let responseString = '';
 
         var resultCallback = function (res) {
-            var response = responseString;
-            console.log('==> Answering: ', response);
-            console.log('test: ' + response[0]);
-            this.emit(':tell', 'The answer is');
+            console.log('==> Answering: ', responseString);
+            mythis.emit(':tell', 'The answer is');
         }
 
         https.get('https://finance.google.com/finance/info?client=ig&q=NASDAQ:MSFT', (res) => {
