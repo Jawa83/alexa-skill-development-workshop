@@ -55,7 +55,7 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
         let responseString = '';
 
         var resultCallback = function (res) {
-            var response = JSON.parse(responseString);
+            var response = responseString;
             console.log('==> Answering: ', response);
             mythis.emit(':tell', 'The answer is' + response.l_cur);
         }
