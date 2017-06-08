@@ -53,6 +53,7 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
         // let mydata = this.event.request.intent.slots.mydata.value;
         // console.log('mydata:', mydata);
         let responseString = '';
+        const mythis = this;
 
         var resultCallback = function (res) {
             console.log('==> Answering: ', responseString);
