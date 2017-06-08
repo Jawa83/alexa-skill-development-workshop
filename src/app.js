@@ -54,6 +54,13 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
         // console.log('mydata:', mydata);
         let responseString = '';
         const mythis = this;
+
+        var resultCallback = function (res) {
+            const speechOutput = responseString;
+            console.log('==> Answering: ', speechOutput);
+            mythis.emit(':tell', 'The answer is'+speechOutput);
+        }
+
         https.get('https://finance.google.com/finance/info?client=ig&q=NASDAQ:MSFT', (res) => {
             console.log('statusCode:', res.statusCode);
             console.log('headers:', res.headers);
@@ -62,11 +69,7 @@ module.exports.guessHandlers = Alexa.CreateStateHandler(states.GUESS, {
                 responseString += d;
             });
 
-            res.on('end', function(res) {
-                const speechOutput = responseString;
-                console.log('==> Answering: ', speechOutput);
-                mythis.emit(':tell', 'The answer is'+speechOutput);
-            });
+            res.on('end', resultCallback);
         }).on('error', (e) => {
             console.error(e);
         });
