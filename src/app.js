@@ -1,4 +1,5 @@
 const Alexa = require('alexa-sdk');
+let https = require('https');
 
 const WELCOME_MESSAGE = 'Welcome to High Low guessing game. Would you like to play?';
 const START_MESSAGE = 'Great! Try saying a number to start the game.';
@@ -24,6 +25,28 @@ module.exports.handlers = {
 module.exports.startHandlers = Alexa.CreateStateHandler(states.START, {
     Start() {
         this.emit(':ask', WELCOME_MESSAGE, HELP_MESSAGE);
+    },
+    'httpIntent': function() {
+        let mydata = this.event.request.intent.slots.mydata.value;
+        console.log('mydata:', mydata);
+        let responseString = '';
+        const mythis = this;
+        https.get('https://finance.google.com/finance/info?client=ig&q=NASDAQ:MSFT', (res) => {
+            console.log('statusCode:', res.statusCode);
+            console.log('headers:', res.headers);
+
+            res.on('data', (d) => {
+                responseString += d;
+            });
+
+            res.on('end', function(res) {
+                const speechOutput = responseString;
+                console.log('==> Answering: ', speechOutput);
+                mythis.emit(':tell', 'The answer is'+speechOutput);
+            });
+        }).on('error', (e) => {
+            console.error(e);
+        });
     },
     'AMAZON.YesIntent': function () {
         this.attributes['result'] = Math.floor(Math.random() * 100);
